@@ -52,17 +52,26 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
         fun generateOutput(s1: FASTASequence, s2:FASTASequence): String {
             if (s1.modified.length != s2.modified.length) throw RuntimeException("Sequences should be have same length")
 
+            val str1 = s1.modified.toString()
+            val str2 = s2.modified.toString()
             val res = StringBuilder()
-            for (i in 0 until s1.length) {
-                val s = if (s1.modified[i] == s2.modified[i]) {
-                    "${s1.modified[i]} * ${s2.modified[i]}"
-                } else if (s1.modified[i] == Score.GAP_SYMBOL ||
-                        s2.modified[i] == Score.GAP_SYMBOL) {
-                    "${s1.modified[i]}   ${s2.modified[i]}"
+
+            for (ch in str1) {
+                res.append("$ch ")
+            }
+            res.append("\n")
+            for (i in 0 until str1.length) {
+                if (str1[i] == str2[i]){
+                    res.append("* ")
+                } else if (str1[i] == Score.GAP_SYMBOL || str2[i] == Score.GAP_SYMBOL) {
+                    res.append("  ")
                 } else {
-                    "${s1.modified[i]} — ${s2.modified[i]}"
+                    res.append("| ")
                 }
-                res.append("$s\n")
+            }
+            res.append("\n")
+            for (ch in str2) {
+                res.append("$ch ")
             }
             return res.toString()
         }

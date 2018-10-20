@@ -5,7 +5,7 @@ import java.lang.StringBuilder
 
 class FASTASequence(private val name: String, private val sequence: String): Iterable<Char> {
 
-    val modified =  StringBuffer(sequence)
+    val modified = StringBuffer(sequence)
 
     val length: Int
         get() = sequence.length
@@ -56,8 +56,8 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
             for (i in 0 until s1.length) {
                 val s = if (s1.modified[i] == s2.modified[i]) {
                     "${s1.modified[i]} * ${s2.modified[i]}"
-                } else if (s1.modified[i] == Scores.GAP_SYMBOL ||
-                        s2.modified[i] == Scores.GAP_SYMBOL) {
+                } else if (s1.modified[i] == Score.GAP_SYMBOL ||
+                        s2.modified[i] == Score.GAP_SYMBOL) {
                     "${s1.modified[i]}   ${s2.modified[i]}"
                 } else {
                     "${s1.modified[i]} — ${s2.modified[i]}"

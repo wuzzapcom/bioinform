@@ -6,7 +6,6 @@ import com.xenomachina.argparser.default
 import java.io.File
 
 class CommandLineParser(parser: ArgParser) {
-    private val isNucleotide by parser.flagging("-n", "--nucleotide", help="if not nucleotide then amino acids")
     private val firstConfig by parser.storing("--first", help="first config file")
     private val secondConfig by parser.storing("--second", help="second config file")
     private val tableConfig by parser.storing(
@@ -15,11 +14,13 @@ class CommandLineParser(parser: ArgParser) {
             .default { "" }
     private val gap by parser.storing("-g", "--gap", help="fine for gap(default: -2)") {toInt()}.default { -2 }
     private val disableCheck by parser.flagging("--disable-check", help="Disable check for FASTA standard")
+    private val debug by parser.flagging("--debug", help="Enable debug output")
+
 
     val config: Config
-        get() = Config(isNucleotide, gap, disableCheck, firstConfig, secondConfig, tableConfig)
+        get() = Config(debug, gap, disableCheck, firstConfig, secondConfig, tableConfig)
 
-    inner class Config(val nucleotide: Boolean,
+    inner class Config(val debug: Boolean,
                        val gap: Int,
                        val disableCheck: Boolean,
                        firstConfig: String,

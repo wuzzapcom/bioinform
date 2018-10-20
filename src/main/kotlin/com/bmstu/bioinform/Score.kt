@@ -3,7 +3,7 @@ package com.bmstu.bioinform
 import java.lang.RuntimeException
 import java.lang.StringBuilder
 
-class Scores(private val height: Int, private val width: Int) {
+class Score(val height: Int, val width: Int) {
 
     companion object {
         const val GAP_SYMBOL = '-'
@@ -68,6 +68,7 @@ class Scores(private val height: Int, private val width: Int) {
         }
     }
 
+
     override fun toString(): String {
 
         val res = StringBuilder()
@@ -77,4 +78,6 @@ class Scores(private val height: Int, private val width: Int) {
         }
         return res.toString()
     }
+
+    private inner class PairSorter(private val vector: Pair<Int, Int>)
 }

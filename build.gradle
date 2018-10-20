@@ -23,11 +23,15 @@ mainClassName = 'com.bmstu.bioinform.MainKt'
 
 repositories {
     mavenCentral()
+    jcenter()
+    maven {
+        url  "https://dl.bintray.com/spekframework/spek-dev"
+    }
 }
 
-sourceSets {
-    main.java.srcDirs += 'src/'
-}
+//sourceSets {
+//    main.java.srcDirs += 'src/'
+//}
 
 jar {
     manifest {
@@ -36,7 +40,18 @@ jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "com.xenomachina:kotlin-argparser:$kotlin_argparser_version"
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.3.1")
+    testCompile("org.junit.jupiter:junit-jupiter-params:5.3.1")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.1")
 }

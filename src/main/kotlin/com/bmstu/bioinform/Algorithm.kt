@@ -57,58 +57,22 @@ class Algorithm(
         var j = score.width - 1
         while (i != 0 || j != 0) {
             when {
-                score[i, j] == score[i - 1, j - 1] + matchingReward(s1[i - 1], s2[j - 1]) -> {
+                i > 0 && j > 0 && score[i, j] == score[i - 1, j - 1] + matchingReward(s1[i - 1], s2[j - 1]) -> {
                     i--
                     j--
                 }
-                score[i, j] == score[i - 1, j] + gapFine -> {
+                i > 0 && score[i, j] == score[i - 1, j] + gapFine -> {
                     i--
-                    s2.insert(i, Score.GAP_SYMBOL)
+                    s2.insert(j, Score.GAP_SYMBOL)
                 }
-                score[i, j] == score[i, j - 1] + gapFine -> {
+                j > 0 && score[i, j] == score[i, j - 1] + gapFine -> {
                     j--
-                    s1.insert(j, Score.GAP_SYMBOL)
+                    s1.insert(i, Score.GAP_SYMBOL)
                 }
                 else -> throw RuntimeException("Error in score table: no way to previous cell")
             }
         }
     }
-
-//    fun buildFASTA(s1: FASTASequence, s2: FASTASequence) {
-//        var i = height - 1
-//        var j = width - 1
-//        while (i != 0 || j != 0) {
-//            when {
-//                this[i - 1, j - 1] > Math.max(this[i-1, j], this[i, j-1]) -> {
-//                    i--
-//                    j--
-//                }
-//                this[i, j - 1] > Math.max(this[i-1, j-1], this[i-1, j]) -> {
-//                    j--
-//                    s1.insert(j, Score.GAP_SYMBOL)
-//                }
-//                this[i - 1, j] > Math.max(this[i-1, j-1], this[i, j-1]) -> {
-//                    i--
-//                    s2.insert(i, Score.GAP_SYMBOL)
-//                }
-//                this[i-1, j-1] == this[i-1,j] -> {
-//                    i--
-//                    j--
-//                }
-//                this[i-1, j-1] == this[i,j-1] -> {
-//                    i--
-//                    j--
-//                }
-//                this[i-1,j] == this[i,j-1] -> {
-//                    j--
-//                    s1.insert(j, Score.GAP_SYMBOL)
-//                }
-//                else -> {
-//                    throw RuntimeException("Something went wrong")
-//                }
-//            }
-//        }
-//    }
 
     private fun max(a: Int, b: Int, c: Int): Int {
         return Math.max(Math.max(a, b), c)

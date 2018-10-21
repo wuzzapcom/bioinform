@@ -1,4 +1,4 @@
-#README
+# README
 
 ## Requirements
 
@@ -10,4 +10,8 @@
     java -jar build/libs/bioinform-0.5.0.jar --help
     
 Tests will be started automatically.
+
+## Important
+
+One file should contain one FASTA item.
     

@@ -9,18 +9,19 @@ import java.lang.RuntimeException
 class AlgorithmTests {
 
     @Test
-    fun `AATCG -- AACG`() {
-        val s1 = FASTASequence("1", "AATCG")
-        val s2 = FASTASequence("2", "AACG")
+    fun `ACGGCTT -- ACGT`() {
+        val s1 = FASTASequence("1", "ACGGCTT")
+        val s2 = FASTASequence("2", "ACGT")
         val score = Algorithm(
                 s1,
                 s2,
-                -2,
+                -10,
+                -1,
                 Table.parse(listOf()).matcher()
         ).perform()
-        assertEquals(2, score.score)
-        assertEquals( "AATCG", s1.modified.toString())
-        assertEquals( "AA-CG", s2.modified.toString())
+        assertEquals(8, score.score)
+        assertEquals( "ACGGCTT", s1.modified.toString())
+        assertEquals( "ACG---T", s2.modified.toString())
     }
 
     @Test
@@ -30,10 +31,11 @@ class AlgorithmTests {
         val score = Algorithm(
                 s1,
                 s2,
-                -2,
+                -10,
+                -1,
                 Table.parse(listOf()).matcher()
         ).perform()
-        assertEquals(-1, score.score)
+        assertEquals(-5, score.score)
         assertEquals( "A", s1.modified.toString())
         assertEquals( "B", s2.modified.toString())
     }
@@ -47,9 +49,10 @@ class AlgorithmTests {
                 s1,
                 s2,
                 -2,
+                -1,
                 Table.parse(listOf()).matcher()
         ).perform()
-        assertEquals(-7, score.score)
+        assertEquals(0, score.score)
         assertEquals( "AAAAB", s1.modified.toString())
         assertEquals( "----B", s2.modified.toString())
     }
@@ -62,9 +65,10 @@ class AlgorithmTests {
                 s1,
                 s2,
                 -2,
+                -1,
                 Table.parse(listOf()).matcher()
         ).perform()
-        assertEquals(-7, score.score)
+        assertEquals(0, score.score)
         assertEquals( "BAAAA", s1.modified.toString())
         assertEquals( "B----", s2.modified.toString())
     }
@@ -77,9 +81,10 @@ class AlgorithmTests {
                 s1,
                 s2,
                 -2,
+                -1,
                 Table.parse(blosumTable.split("\n")).matcher()
         ).perform()
-        assertEquals(-4, score.score)
+        assertEquals(-1, score.score)
         assertEquals( "BAAAA", s1.modified.toString())
         assertEquals( "B----", s2.modified.toString())
     }
@@ -104,6 +109,7 @@ class AlgorithmTests {
                     s1,
                     s2,
                     -2,
+                    -1,
                     Table.parse(blosumTable.split("\n")).matcher()
             ).perform()
         } catch (e: RuntimeException){

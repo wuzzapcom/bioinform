@@ -19,13 +19,14 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
         return sequence[index]
     }
 
-    fun insert(index: Int, symbol: Char) {
-        modified.insert(index, symbol)
+    fun insertGap(index: Int) {
+        modified.insert(index, GAP_SYMBOL)
     }
 
     companion object {
 
-        const val OUTPUT_STRING_LENGTH = 80
+        private const val OUTPUT_STRING_LENGTH = 80
+        private const val GAP_SYMBOL = '-'
 
         fun parse(text: String, disableCheck: Boolean): FASTASequence {
             if (text[0] != '>') throw RuntimeException("Not FASTA")
@@ -66,7 +67,7 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
             for (i in 0 until str1.length) {
                 if (str1[i] == str2[i]){
                     r2.append("* ")
-                } else if (str1[i] == Score.GAP_SYMBOL || str2[i] == Score.GAP_SYMBOL) {
+                } else if (str1[i] == GAP_SYMBOL || str2[i] == GAP_SYMBOL) {
                     r2.append("  ")
                 } else {
                     r2.append("| ")
@@ -83,7 +84,7 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
 
             val ar1 = arrayListOf<String>()
             while (i < r1.length) {
-                if (i != 0 && i % OUTPUT_STRING_LENGTH == 0) {
+                if (i != 0 && i % OUTPUT_STRING_LENGTH == 0 || i == r1.length - 1) {
                     ar1.add(r1.substring(j * OUTPUT_STRING_LENGTH,
                             if ((j+1) * OUTPUT_STRING_LENGTH < r1.length) ++j* OUTPUT_STRING_LENGTH else r1.length))
                 }
@@ -93,7 +94,7 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
             j = 0
             val ar2 = arrayListOf<String>()
             while (i < r2.length) {
-                if (i != 0 && i % OUTPUT_STRING_LENGTH == 0) {
+                if (i != 0 && i % OUTPUT_STRING_LENGTH == 0 || i == r1.length - 1) {
                     ar2.add(r2.substring(j * OUTPUT_STRING_LENGTH,
                             if ((j+1) * OUTPUT_STRING_LENGTH < r2.length) ++j*OUTPUT_STRING_LENGTH else r2.length))
                 }
@@ -103,7 +104,7 @@ class FASTASequence(private val name: String, private val sequence: String): Ite
             j = 0
             val ar3 = arrayListOf<String>()
             while (i < r3.length) {
-                if (i != 0 && i % OUTPUT_STRING_LENGTH == 0) {
+                if (i != 0 && i % OUTPUT_STRING_LENGTH == 0 || i == r1.length - 1) {
                     ar3.add(r3.substring(j * OUTPUT_STRING_LENGTH,
                             if ((j+1) * OUTPUT_STRING_LENGTH < r3.length) ++j*OUTPUT_STRING_LENGTH else r3.length))
                 }

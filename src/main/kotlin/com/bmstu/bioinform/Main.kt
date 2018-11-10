@@ -3,14 +3,6 @@ package com.bmstu.bioinform
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.mainBody
 
-/*
-    TODO
-    1. Algorithm
-    2. Tests
-    3. check fasta for correctness(only chars from alphabet)
-    4. print output to file optionally
- */
-
 fun main(args: Array<String>) = mainBody {
     val config = ArgParser(args).parseInto { parser: ArgParser -> CommandLineParser(parser) }.config
 
@@ -19,7 +11,8 @@ fun main(args: Array<String>) = mainBody {
     val score = Algorithm(
             s1,
             s2,
-            config.gap,
+            config.gapOpen,
+            config.gapExtend,
             Table.parse(config.table).matcher()
             ).perform()
     println("Score: ${score.score}")

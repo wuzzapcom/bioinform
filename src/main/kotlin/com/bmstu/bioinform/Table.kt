@@ -8,7 +8,7 @@ class Table(private val table: Array<Array<Int>>, private val indexes: Map<Char,
 
     fun matcher(): (Char, Char) -> Int {
         if (table.isEmpty())
-            return {a: Char, b: Char -> if (a == b) 1 else -1}
+            return {a: Char, b: Char -> if (a == b) 5 else -5}
         return {line: Char, col: Char ->
             val l = indexes[line]
             val c = indexes[col]

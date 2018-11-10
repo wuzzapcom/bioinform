@@ -12,16 +12,18 @@ class CommandLineParser(parser: ArgParser) {
             "--table",
             help="path to table(BLOSUM64 or DNAfull). Used default table if empty")
             .default { "" }
-    private val gap by parser.storing("-g", "--gap", help="fine for gap(default: -2)") {toInt()}.default { -2 }
+    private val gapOpen by parser.storing("--gap-open", help="open fine for gap(default: -2)") {toInt()}.default { -2 }
+    private val gapExtend by parser.storing("--gap-extend", help="extend fine for gap(default: -2)") {toInt()}.default { -2 }
     private val disableCheck by parser.flagging("--disable-check", help="Disable check for FASTA standard")
     private val debug by parser.flagging("--debug", help="Enable debug output")
 
 
     val config: Config
-        get() = Config(debug, gap, disableCheck, firstConfig, secondConfig, tableConfig)
+        get() = Config(debug, gapOpen, gapExtend, disableCheck, firstConfig, secondConfig, tableConfig)
 
     inner class Config(val debug: Boolean,
-                       val gap: Int,
+                       val gapOpen: Int,
+                       val gapExtend: Int,
                        val disableCheck: Boolean,
                        firstConfig: String,
                        secondConfig: String,
